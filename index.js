@@ -26,6 +26,8 @@ async function run() {
             .db("grameenAgri")
             .collection("services");
 
+        const reviewCollection = client.db("grameenAgri").collection("reviews");
+
         app.get("/services", async (req, res) => {
             const cursor = serviceCollection.find({});
             const services = await cursor.toArray();
@@ -38,6 +40,28 @@ async function run() {
             res.send(service);
 
             console.log(result);
+        });
+
+        // Reviews API:
+
+        app.get("/reviews", async (req, res) => {
+            let query = {};
+
+            if (req.query.email) {
+                query = {
+                    email: req.query.email,
+                };
+            }
+
+            const cursor = reviewCollection.find(query);
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        });
+
+        app.post("/orders", async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.send(result);
         });
     } finally {
     }
