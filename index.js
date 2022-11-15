@@ -26,6 +26,8 @@ async function run() {
             .db("grameenAgri")
             .collection("services");
 
+        const userCollection = client.db("grameenAgri").collection("users");
+
         const reviewCollection = client.db("grameenAgri").collection("reviews");
 
         app.get("/services", async (req, res) => {
@@ -41,6 +43,35 @@ async function run() {
 
             console.log(result);
         });
+
+        // Users API:
+
+        // app.post("/users", async (req, res) => {
+        //     const user = req.body;
+        //     const result = await userCollection.insertOne(user);
+        //     // user._id = result.insertedId;
+        //     res.send(result);
+        // });
+
+        // app.put("/users/:id", async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: ObjectId(id) };
+        //     const user = req.body;
+        //     const option = { upsert: true };
+        //     const updatedUser = {
+        //         $set: {
+        //             name: user.name,
+        //             email: user.email,
+        //         },
+        //     };
+        //     const result = await userCollection.updateOne(
+        //         query,
+        //         updatedUser,
+        //         option
+        //     );
+        //     res.send(result);
+        // });
+
 
         // Reviews API:
 
@@ -58,9 +89,9 @@ async function run() {
             res.send(reviews);
         });
 
-        app.post("/orders", async (req, res) => {
-            const order = req.body;
-            const result = await orderCollection.insertOne(order);
+        app.post("/reviews", async (req, res) => {
+            const review = req.body;
+            const result = await reviewCollection.insertOne(review);
             res.send(result);
         });
     } finally {
