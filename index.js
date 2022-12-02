@@ -44,46 +44,10 @@ async function run() {
             console.log(result);
         });
 
-        // Users API:
-
-        // app.post("/users", async (req, res) => {
-        //     const user = req.body;
-        //     const result = await userCollection.insertOne(user);
-        //     // user._id = result.insertedId;
-        //     res.send(result);
-        // });
-
-        // app.put("/users/:id", async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: ObjectId(id) };
-        //     const user = req.body;
-        //     const option = { upsert: true };
-        //     const updatedUser = {
-        //         $set: {
-        //             name: user.name,
-        //             email: user.email,
-        //         },
-        //     };
-        //     const result = await userCollection.updateOne(
-        //         query,
-        //         updatedUser,
-        //         option
-        //     );
-        //     res.send(result);
-        // });
-
-
         // Reviews API:
 
         app.get("/reviews", async (req, res) => {
             let query = {};
-
-            if (req.query.email) {
-                query = {
-                    email: req.query.email,
-                };
-            }
-
             const cursor = reviewCollection.find(query);
             const reviews = await cursor.toArray();
             res.send(reviews);
